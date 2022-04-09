@@ -1,24 +1,26 @@
+from random import randint
+
 attacking_type_table = {
     'normal': {
-'normal': 1,
-'fire': 1,
-'water': 1,
-'electric': 1,
-'grass': 1,
-'ice': 1,
-'fighting': 1,
-'poison': 1,
-'ground': 1,
-'flying': 1,
-'psychic': 1,
-'bug': 1,
-'rock': 0.5,
-'ghost': 0,
-'dragon': 1,
-'dark': 1,
-'steel': 0.5,
-'fairy': 1
-},
+        'normal': 1,
+        'fire': 1,
+        'water': 1,
+        'electric': 1,
+        'grass': 1,
+        'ice': 1,
+        'fighting': 1,
+        'poison': 1,
+        'ground': 1,
+        'flying': 1,
+        'psychic': 1,
+        'bug': 1,
+        'rock': 0.5,
+        'ghost': 0,
+        'dragon': 1,
+        'dark': 1,
+        'steel': 0.5,
+        'fairy': 1
+    },
         'fire': {
         'normal': 1,
         'fire': 0.5,
@@ -416,5 +418,11 @@ def damage_calc(pokemon_attacking, pokemon_defending, pokemon_attacking_move_pow
     else:
         damage_with_weather = base_damage
 
+    # Assume that the move didn't crit
+    crit_factor = 1
+
     # Critical hits multiply the damage done by 1.5x if rolled
     # TODO: Add crit logic
+    if randint(1, 1001) > 42:
+        crit_factor = 3 if pokemon_attacking.ability() is 'Sniper' else 1.5
+        
