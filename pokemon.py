@@ -57,29 +57,36 @@ class Pokemon:
     substitute_up: dict
 
     # Only one type of status is possible at a time, but toxic has a special condition
+    # Taunt would be included here
     status: dict
 
     # Some moves like Wrap and Magma Storm continue to damage people
     affected_by_ongoing_move: dict
 
     # Some moves like Sky Attack or Solarbeam require two turns to set up
-    setting_up_for_two_turn_move: dict
+    setting_up_for_two_turn_move: bool
 
+    # Launch a move, be it damaging or status
     def attack():
         pass
 
+    # A switch
+    # U-turn, Volt Switch, and Flip-Turn would all call this in additon to dealing damage
     def switch_out():
         pass
 
+    # Put a substitute on the field to soak damage and prevent status
     def set_substitute():
         pass
 
+    # Let the substitute take damage
     def damage_substitute():
         pass
 
+    # Damage at the end of the turn due to weather
     def take_weather_damage():
         pass
 
+    # Some statuses deal damage at the end of the turn
     def take_status_damage():
         pass
-
