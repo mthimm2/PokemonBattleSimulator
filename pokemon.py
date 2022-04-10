@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-
-
-from dataclasses import dataclass
+from utils import damage_calc
 
 @dataclass(repr = True, init = True)
 class Pokemon:
@@ -46,7 +44,7 @@ class Pokemon:
     critical_strike_factor: int
     
     # The pokemon's set of four moves
-    moves: dict
+    moves: list
 
     # Stat modifications dictionary
         # I thought of this as a per-stat entry type of thing
@@ -66,27 +64,36 @@ class Pokemon:
     # Some moves like Sky Attack or Solarbeam require two turns to set up
     setting_up_for_two_turn_move: bool
 
-    # Launch a move, be it damaging or status
-    def attack():
+    # Pokemon's gender matters for certain abilities and Attract
+    gender: str
+
+    # Before a pokemon can attack, we should check if it's hindered by paralysis, freeze, attract, etc.
+    def immobilized_check(self):
         pass
+
+    # Launch a move, be it damaging or status
+    def attack(self):
+
+        selected_move = input(f'1. {self.moves[1]}\t 2. {self.moves[2]}\t 3. {self.moves[3]}\t 4. {self.moves[4]}\t')
+        damage_calc(selected_move,)
 
     # A switch
     # U-turn, Volt Switch, and Flip-Turn would all call this in additon to dealing damage
-    def switch_out():
+    def switch_out(self):
         pass
 
     # Put a substitute on the field to soak damage and prevent status
-    def set_substitute():
+    def set_substitute(self):
         pass
 
     # Let the substitute take damage
-    def damage_substitute():
+    def damage_substitute(self):
         pass
 
     # Damage at the end of the turn due to weather
-    def take_weather_damage():
+    def take_weather_damage(self):
         pass
 
     # Some statuses deal damage at the end of the turn
-    def take_status_damage():
+    def take_status_damage(self):
         pass
