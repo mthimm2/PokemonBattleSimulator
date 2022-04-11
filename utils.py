@@ -21,7 +21,7 @@ attacking_type_table = {
         'steel': 0.5,
         'fairy': 1
     },
-        'fire': {
+    'fire': {
         'normal': 1,
         'fire': 0.5,
         'water': 0.5,
@@ -426,3 +426,4 @@ def damage_calc(pokemon_attacking, pokemon_defending, pokemon_attacking_move_pow
     if randint(1, 1001) > 42:
         crit_factor = 3 if pokemon_attacking.ability() is 'Sniper' else 1.5
         
+    return damage_dealt
