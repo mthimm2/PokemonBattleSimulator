@@ -79,6 +79,7 @@ class Pokemon:
             'poison': 0,
             'toxic': 0,
             'faint': 0,
+            'bound': 0,
         }
     )
 
@@ -170,6 +171,10 @@ class Pokemon:
         elif self.status['toxic'] != 0:
             self.current_hp -= (self.status['toxic'] * self.max_hp) // 16
             self.status['toxic'] += 1
+
+        elif self.status['bound'] != 0:
+            # TODO: Add logic to handle binding moves removing 1/8 per turn
+            pass
 
     # Once you're at or below 0 hp, you're fainted
     def faint_check(self):
