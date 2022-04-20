@@ -1,6 +1,4 @@
-from random import randint
-
-attacking_type_table = {
+{
     'normal': {
         'normal': 1,
         'fire': 1,
@@ -21,7 +19,7 @@ attacking_type_table = {
         'steel': 0.5,
         'fairy': 1
     },
-        'fire': {
+    'fire': {
         'normal': 1,
         'fire': 0.5,
         'water': 0.5,
@@ -179,7 +177,7 @@ attacking_type_table = {
         'dragon': 1,
         'dark': 1,
         'steel': 2,
-        'fairy': 1
+        'fairy': 1,
     },
     'flying': {
         'normal': 1,
@@ -199,7 +197,7 @@ attacking_type_table = {
         'dragon': 1,
         'dark': 1,
         'steel': 0.5,
-        'fairy': 1
+        'fairy': 1,
     },
     'psychic': {
         'normal': 1,
@@ -279,7 +277,7 @@ attacking_type_table = {
         'dragon': 1,
         'dark': 0.5,
         'steel': 0.5,
-        'fairy': 1
+        'fairy': 1,
     },
     'dragon': {
         'normal': 1,
@@ -318,7 +316,7 @@ attacking_type_table = {
         'ghost': 2,
         'dragon': 1,
         'dark': 0.5,
-        'steel': 0.5,
+        'steel': 1,
         'fairy': 0.5
     },
     'steel': {
@@ -362,67 +360,3 @@ attacking_type_table = {
         'fairy': 1
     }
 }
-
-def damage_calc(pokemon_attacking, pokemon_defending, pokemon_attacking_move_power, pokemon_attacking_move_type, physical_special_or_status, weather):
-
-    '''
-        Damage formula: https://bulbapedia.bulbagarden.net/wiki/Damage
-    '''
-
-    # Level dependency doesn't rely on any other factors
-    level_dependency = ((2 * pokemon_attacking.level() / 5) + 2)
-    
-    # A simple ratio of the correct attacking stat to the correct defending stat
-    attack_to_defense_ratio = 0
-
-    # If a move is a status move, it won't deal damage directly, but is still subject to type checking
-    if physical_special_or_status == 'status':
-        
-        pass
-
-    # Otherwise, we can perform the calculation as normal
-    else:
-        
-        if physical_special_or_status == 'physical':
-            attack_to_defense_ratio = pokemon_attacking.attack() / pokemon_defending.defense()  
-        
-        else:
-            attack_to_defense_ratio = pokemon_attacking.special_attack() / pokemon_defending.special_defense()
-
-    # This forms the numerator of the fraction present in the damage calc formula
-    numerator = level_dependency * pokemon_attacking_move_power * attack_to_defense_ratio
-
-    # Then we perform the division by 50 and add two and call this "base damage"
-    base_damage = (numerator / 50) + 2
-    
-    # Next we need to consider the effect that weather has on certain moves
-    damage_with_weather = 0
-
-    # Weather affects the damage dealt and has specific cases for specific moves
-    # TODO: Add specific cases for moves/abilities
-    if weather == 'rain' and pokemon_attacking_move_type == 'water':
-        damage_with_weather = base_damage * 1.5
-
-    elif weather == 'rain' and pokemon_attacking_move_type == 'fire':
-        damage_with_weather = base_damage * 0.5
-    
-    elif weather == 'sun' and pokemon_attacking_move_type == 'fire':
-        damage_with_weather = base_damage * 1.5
-
-    elif weather == 'sun' and pokemon_attacking_move_type == 'water':
-        damage_with_weather = base_damage * 0.5
-    
-    elif weather == 'hail' and pokemon_attacking_move_type == 'ice':
-        damage_with_weather = base_damage * 1.5
-
-    else:
-        damage_with_weather = base_damage
-
-    # Assume that the move didn't crit
-    crit_factor = 1
-
-    # Critical hits multiply the damage done by 1.5x if rolled
-    # TODO: Add crit logic
-    if randint(1, 1001) > 42:
-        crit_factor = 3 if pokemon_attacking.ability() is 'Sniper' else 1.5
-        
