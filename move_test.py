@@ -1,4 +1,5 @@
 import unittest
+from utils import attacking_type_table
 from move import Move
 from copy import deepcopy
 
@@ -44,6 +45,7 @@ class test(unittest.TestCase):
         d.name = 'Bounce'
         self.assertNotEqual(d.name, b.name)
         self.assertNotEqual(d.name, c.name)
+        print('Name test complete')
 
 
     def test_move_type(self):
@@ -61,6 +63,34 @@ class test(unittest.TestCase):
         )
 
         self.assertEqual(a.type, 'Dark')
+        self.assertNotEqual(a.type, None)
+        self.assertFalse(a.type == 'Fire')
+
+        b = Move()
+        self.assertEqual(b.type, '')
+        self.assertNotEqual(b.type, None)
+        b.type = 'Geflargen'
+        self.assertTrue(b.type not in attacking_type_table)
+        b.type = 'fairy'
+        self.assertTrue(b.type in attacking_type_table)
+        self.assertTrue(attacking_type_table[b.type]['fire'] == 0.5)
+        self.assertTrue(attacking_type_table['poison'][b.type] == 2)
+
+        c = b
+        self.assertEqual(c.type, b.type)
+        self.assertTrue(c.type in attacking_type_table)
+        self.assertTrue(attacking_type_table[c.type]['fire'] == 0.5)
+        self.assertTrue(attacking_type_table[c.type]['fighting'] == 2)
+        c.type = 'water'
+        self.assertTrue(b.type == 'water')
+        self.assertEqual(c.type, 'water')
+
+        d = deepcopy(a)
+        self.assertEqual(d.type, 'Dark')
+        d.type = 'dark'
+        self.assertNotEqual(d.type, a.type)
+        self.assertEqual(attacking_type_table[d.type]['psychic'], 2)
+        print('Type test done')
 
 
     # def test_move_power(self):
