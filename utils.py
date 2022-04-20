@@ -1,4 +1,4 @@
-{
+type_attack_chart = {
     'normal': {
         'normal': 1,
         'fire': 1,
